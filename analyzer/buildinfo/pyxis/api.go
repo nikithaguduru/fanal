@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 
 	"golang.org/x/xerrors"
 )
@@ -16,6 +17,7 @@ const (
 type response struct {
 	Data []struct {
 		ContentSets []string `json:"content_sets"`
+		CpeIDs      []string `json:"cpe_ids"`
 	} `json:"data"`
 	Page     int `json:"page"`
 	PageSize int `json:"page_size"`
@@ -44,6 +46,13 @@ func NewPyxis(options ...Option) Pyxis {
 	return *p
 }
 
+type mapping struct {
+	Nvr         string   `json:"nvr"`
+	Arch        string   `json:"arch"`
+	ContentSets []string `json:"content_sets"`
+	CpeIDs      []string `json:"cpe_ids"`
+}
+
 func (p Pyxis) FetchContentSets(nvr, arch string) ([]string, error) {
 	url := fmt.Sprintf(p.baseURL, nvr, arch)
 	resp, err := http.Get(url)
@@ -60,6 +69,37 @@ func (p Pyxis) FetchContentSets(nvr, arch string) ([]string, error) {
 	if len(res.Data) != 1 {
 		return nil, xerrors.Errorf("the response must have only one block")
 	}
+
+	// TODO: For generating mapping
+	f, err := os.Open("nvr-mapping.json")
+	if err != nil {
+		panic(err)
+	}
+
+	var m map[string]mapping
+	if err = json.NewDecoder(f).Decode(&m); err != nil {
+		panic(err)
+	}
+	f.Close()
+
+	m[fmt.Sprintf("%s//%s", nvr, arch)] = mapping{
+		Nvr:         nvr,
+		Arch:        arch,
+		ContentSets: res.Data[0].ContentSets,
+		CpeIDs:      res.Data[0].CpeIDs,
+	}
+
+	f, err = os.Create("nvr-mapping.json")
+	if err != nil {
+		panic(err)
+	}
+
+	enc := json.NewEncoder(f)
+	enc.SetIndent("", "  ")
+	if err = enc.Encode(m); err != nil {
+		panic(err)
+	}
+	f.Close()
 
 	return res.Data[0].ContentSets, nil
 }
