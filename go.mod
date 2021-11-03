@@ -8,7 +8,7 @@ require (
 	github.com/alicebob/miniredis/v2 v2.16.0
 	github.com/aquasecurity/go-dep-parser v0.0.0-20211013074621-eb58e8565220
 	github.com/aquasecurity/testdocker v0.0.0-20210911155206-e1e85f5a1516
-	github.com/aquasecurity/tfsec v0.58.11
+	github.com/aquasecurity/tfsec v0.58.14
 	github.com/aws/aws-sdk-go v1.41.0
 	github.com/br0xen/boltbrowser v0.0.0-20210531150353-7f10a81cece0 // indirect
 	github.com/docker/docker v20.10.8+incompatible
@@ -16,7 +16,6 @@ require (
 	github.com/go-git/go-git/v5 v5.4.2
 	github.com/go-redis/redis/v8 v8.11.4
 	github.com/golang-jwt/jwt v3.2.2+incompatible
-	github.com/google/flatbuffers v1.12.1 // indirect
 	github.com/google/go-containerregistry v0.6.0
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-hclog v0.15.0 // indirect
@@ -29,7 +28,7 @@ require (
 	github.com/kylelemons/godebug v1.1.0
 	github.com/mitchellh/mapstructure v1.4.2
 	github.com/moby/buildkit v0.8.1
-	github.com/open-policy-agent/opa v0.32.0
+	github.com/open-policy-agent/opa v0.34.0
 	github.com/opencontainers/go-digest v1.0.0
 	github.com/opencontainers/image-spec v1.0.2-0.20190823105129-775207bd45b6
 	github.com/saracen/walker v0.0.0-20191201085201-324a081bae7e
