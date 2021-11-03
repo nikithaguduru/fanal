@@ -144,8 +144,9 @@ func initializeCache(backend string) (cache.Cache, error) {
 
 func imageAction(c *cli.Context, fsCache cache.Cache) error {
 	artifactOpt := artifact.Option{
-		SkipFiles: c.StringSlice("skip-files"),
-		SkipDirs:  c.StringSlice("skip-dirs"),
+		DisabledAnalyzers: append(analyzer.TypeOSes, analyzer.TypeLanguages...), // TODO: remove me
+		SkipFiles:         c.StringSlice("skip-files"),
+		SkipDirs:          c.StringSlice("skip-dirs"),
 	}
 	scannerOpt := config.ScannerOption{
 		PolicyPaths: c.StringSlice("policy"),
