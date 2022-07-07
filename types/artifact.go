@@ -68,6 +68,7 @@ type SrcPackage struct {
 type PackageInfo struct {
 	FilePath string
 	Packages []Package
+	Inode    uint64
 }
 
 type Application struct {
@@ -76,6 +77,7 @@ type Application struct {
 
 	// Lock files have the file path here, while each package metadata do not have
 	FilePath string `json:",omitempty"`
+	Inode    uint64
 
 	// Libraries is a list of lang-specific packages
 	Libraries []Package
